@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phantom W External</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b12;--panel:#10101a;--panel-2:#0e0e18;--text:#e8e8ff;--muted:#a7a7c7;--accent:#8b5cf6;--accent-2:#22d3ee;--ok:#22c55e;--warn:#f59e0b;--danger:#ef4444;
+      --grad: radial-gradient(1200px 600px at 10% -10%, rgba(139,92,246,0.35), transparent 40%),
+              radial-gradient(1000px 500px at 110% 10%, rgba(34,211,238,0.35), transparent 45%),
+              radial-gradient(800px 400px at 50% 110%, rgba(34,197,94,0.25), transparent 40%);
+      --card: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      --glass: rgba(255,255,255,0.06);
+      --ring: 0 0 0 1px rgba(139,92,246,0.35), 0 10px 30px -10px rgba(139,92,246,0.45);
+      --shadow: 0 20px 60px rgba(0,0,0,0.45);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Urbanist,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu; background:var(--bg); color:var(--text);}
+    .wrap{background:var(--grad);}    
+    a{text-decoration:none;color:inherit}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter: blur(10px); background:linear-gradient(180deg, rgba(16,16,26,0.9), rgba(16,16,26,0.6)); border-bottom:1px solid rgba(255,255,255,0.05)}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    .row{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:1px}
+    .badge{padding:6px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:999px;font-size:12px;color:var(--muted)}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:var(--ring);color:#0a0a14;font-weight:800;letter-spacing:.2px;transition:transform .15s ease,filter .2s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.outline{background:transparent;color:var(--text);box-shadow:none;border:1px solid rgba(255,255,255,0.12)}
+
+    .hero{padding:80px 0 40px}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px}
+    .h1{font-size:54px;line-height:1.05;margin:0 0 10px;font-weight:900}
+    .h1 span{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{color:var(--muted);font-size:18px}
+    .hero-card{background:var(--card);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero-scan{height:360px;border-radius:14px;background:linear-gradient(180deg, #0d0d17, #0a0a14);display:grid;place-items:center;position:relative}
+    .scanline{position:absolute;inset:0;background:repeating-linear-gradient( to bottom, rgba(139,92,246,.12), rgba(139,92,246,.12) 1px, transparent 1px, transparent 3px );mix-blend:screen;animation:scroll 6s linear infinite}
+    @keyframes scroll{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+    .hud{position:absolute;top:12px;left:12px;right:12px;display:flex;gap:12px;justify-content:space-between;font-size:12px;color:#d9d9ff}
+    .hud .pill{background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);padding:6px 10px;border-radius:999px}
+
+    .section{padding:64px 0}
+    .section h2{font-size:36px;margin:0 0 10px}
+    .section p.section-lead{color:var(--muted);margin:0 0 28px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px}
+    .muted{color:var(--muted)}
+
+    /* Pricing */
+    .pricing{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .price-card{position:relative;background:var(--card);border:1px solid rgba(255,255,255,0.09);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+    .price{font-size:36px;font-weight:900;margin:6px 0}
+    .per{font-size:12px;color:var(--muted)}
+    .feat{display:flex;align-items:center;gap:8px;margin:10px 0;color:#dfe0ff}
+    .feat svg{opacity:.9}
+    .popular{outline:2px solid rgba(34,211,238,.7)}
+
+    /* Footer */
+    footer{padding:30px 0;border-top:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
+      .pricing{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns:1fr}
+      .pricing{grid-template-columns:1fr}
+      .h1{font-size:38px}
+    }
+    .ribbon{position:sticky;top:0;z-index:60;text-align:center;padding:10px 14px;background:linear-gradient(90deg,rgba(139,92,246,.25),rgba(34,211,238,.25));border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(6px);font-weight:700;color:#e8e8ff}
+  body::after{content:'FUCK PLAYING FAIR';position:fixed;right:-10%;bottom:10%;transform:rotate(-20deg);font-weight:900;font-size:48px;letter-spacing:2px;color:rgba(255,255,255,0.05);pointer-events:none;z-index:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="ribbon">W External<strong></strong>.</div>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container">
+      <div class="row">
+        <div class="brand">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 12L10 4L14 8L21 1" stroke="url(#g)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 12L10 20L14 16L21 23" stroke="url(#g2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="g" x1="3" y1="1" x2="21" y2="1" gradientUnits="userSpaceOnUse"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+              <linearGradient id="g2" x1="3" y1="23" x2="21" y2="23" gradientUnits="userSpaceOnUse"><stop stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+            </defs>
+          </svg>
+          <span>Phantom</span>
+          <span class="badge">HI
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <a href="#features" class="btn outline">Features</a>
+          <a href="#pricing" class="btn">Get Access</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero container">
+    <div class="hero-grid">
+      <div>
+        <div class="badge">Uhm W External Btw
+        <h1 class="h1">Cheat smarter. Use Phantom Today!. <span>Level up your aim</span>.</h1>
+        <p class="lead">Vey good price idk.<\/p>
+        <div style="display:flex;gap:12px;margin-top:18px">
+          <a href="#pricing" class="btn">Choose a Plan</a>
+          <a href="#trust" class="btn outline">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-scan">
+          <div class="hud">
+            <div class="pill">FPS 144</div>
+            <div class="pill">CPU 32%</div>
+            <div class="pill">Latency 18ms</div>
+          </div>
+          <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="110" cy="110" r="90" stroke="rgba(255,255,255,.15)" stroke-width="2" />
+            <circle cx="110" cy="110" r="70" stroke="rgba(139,92,246,.6)" stroke-width="2" stroke-dasharray="6 8" />
+            <path d="M110 32 L118 44 L102 44 Z" fill="rgba(34,211,238,.8)"/>
+            <rect x="108" y="40" width="4" height="30" fill="rgba(34,211,238,.8)"/>
+            <rect x="106" y="105" width="8" height="8" rx="2" fill="rgba(255,255,255,.9)"/>
+          </svg>
+          <div class="scanline"></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <div class="pill" style="background:rgba(34,211,238,.12);border:1px solid rgba(34,211,238,.35);padding:6px 10px;border-radius:999px">HUD Builder</div>
+          <div class="pill" style="background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.35);padding:6px 10px;border-radius:999px">Aim Drills</div>
+          <div class="pill" style="background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);padding:6px 10px;border-radius:999px">Session Notes</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="section container">
+    <h2>Features</h2>
+    <p class="section-lead">Its VERYY W.<\/p>
+    <div class="grid">
+      <article class="card">
+        <h3>Aimbot</h3>
+        <p class="muted">Visual FOV ring and sliders for smoothing/prediction.</p>
+      </article>
+      <article class="card">
+        <h3>ESP</h3>
+        <p class="muted">Cards showing player boxes / skeleton / healthbar.</p>
+      </article>
+      <article class="card">
+        <h3>TriggerBot</h3>
+        <p class="muted">Keybind picker + FOV dial, purely illustrative..</p>
+      </article>
+      <article class="card">
+        <h3>Performance Insights</h3>
+        <p class="muted">Auto‑log FPS, frametime spikes, input latency estimates, and temps. Get optimization suggestions for your next session.</p>
+      </article>
+      <article class="card">
+        <h3>Profiles & Cloud Sync</h3>
+        <p class="muted">Keep your HUDs and drills synced across devices. Optional license‑key sign‑in for multi‑PC access.</p>
+      </article>
+      <article class="card">
+        <h3>Discord Presence</h3>
+        <p class="muted">Show your current session in Discord..</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- TRUST / COMPLIANCE -->
+  <section id="trust" class="section container">
+    <h2>Security & Legitimacy Claims</h2>
+    <p class="section-lead">FUCK matrix.
+    <div class="grid">
+      <div class="card">
+        <h3>Non‑intrusive</h3>
+        <p class="muted">One EXE thats it..</p>
+      </div>
+      <div class="card">
+        <h3>Privacy First</h3>
+        <p class="muted">We don’t collect personal data beyond what’s needed for licensing and cloud sync. Local‑first storage by default.</p>
+      </div>
+      <div class="card">
+        <h3>Support</h3>
+        <p class="muted">Docs, Discord, and email with <strong>same‑day responses</strong> for paid plans.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="section container">
+    <h2>Pricing</h2>
+    <p class="section-lead">Simple, transparent plans. Cancel anytime.</p>
+    <div class="pricing">
+      <div class="price-card">
+      <div class="price-card">
+        <div class="badge">Lifetime</div>
+        <div class="price">$5</div>
+        <div class="per">one‑time</div>
+        <div class="feat">✔ All Features</div>
+        <button class="btn" onclick="openCheckout('lifetime')">Buy</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section container">
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px">
+      <div>
+        <h3>Ready to FUCK dahoodians??</h3>
+        <p class="muted">Grab a plan and unlock your new HUD + practice flow in minutes.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a class="btn" href="#pricing">Get Access</a>
+        <button class="btn outline" onclick="copyDiscord()">Join Discord</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>© <span id="year"></span>  best fucking external or sum shit idk fuck yall.</div>
+      <div style="display:flex;gap:16px">
+        <a href="#" class="muted">Docs</a>
+        <a href="#" class="muted">Support</a>
+        <a href="#" class="muted">Terms</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  function openCheckout(plan){
+    const msg = `Selected plan: ${plan.toUpperCase()}
+Pay 5$ to @liftingcash then join out dc and make a ticket (dc : https://discord.gg/eQhmMcTNGw).`;
+    alert(msg);
+  }
+  function copyDiscord(){
+    const fake = 'https://discord.gg/eQhmMcTNGw';
+    navigator.clipboard.writeText(fake).then(()=>{
+      const btns = document.querySelectorAll('.btn.outline');
+      btns.forEach(b=>{
+        if(b.textContent.includes('Discord')){ b.textContent='Discord link copied!'; setTimeout(()=>b.textContent='Join Discord', 1600); }
+      });
+    });
+  }
+</script>
+</body>
+</html>
